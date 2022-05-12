@@ -2,6 +2,8 @@
 
 Ejemplo básico de Rmarkdown con Latex
 
+___
+
 # Requisitos
 
 Instalar Rmarkdown
