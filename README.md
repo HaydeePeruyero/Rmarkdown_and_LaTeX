@@ -4,7 +4,7 @@ Ejemplo básico de Rmarkdown con Latex
 
 ___
 
-# Requisitos
+# Requisitos 💻
 
 * Instalar Rmarkdown:
 
@@ -23,7 +23,7 @@ distribución MiKTeX, MacTeX, and TeX Live o TinyTex:
 
 ___
 
-# Referencias
+# Referencias 📚
 
 - [bookdown: Authoring Books and Technical Documents with R Markdown](https://bookdown.org/yihui/bookdown/)
 
