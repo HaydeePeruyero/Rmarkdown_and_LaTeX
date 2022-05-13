@@ -1,33 +1,30 @@
 ---
 # Preámbulo con paquetes y definiciones básicas
 # Se incluyen los comandos mínimos de LaTeX
-#title: Rldies
+#title: R-ladies
 author:
  - Nombres Apellidos (email_1@gmail.com)
  - Nombres Apellidos (email_2@gmail.com)
 header-includes:
+  - \usepackage{mathtools}
+  - \usepackage{amsthm}
+  - \usepackage{amssymb}
+  - \usepackage{eufrak}
+  - \usepackage{mathrsfs}
+  - \usepackage{color}
+  - \usepackage[spanish]{babel}
+  - \usepackage{fancyhdr}
   - \usepackage{array}
-  - \usepackage{booktabs}
-  - \usepackage{amsmath}
+  - \usepackage{subfigure} %para incluir mas de una figura en un solo espacio
+  - \usepackage{graphicx}
   - \allowdisplaybreaks #% para permitir rompimiento de ecuaciones en p\'aginas distintas
     # ver http://tex.stackexchange.com/questions/51682/is-it-possible-to-pagebreak-aligned-equations
     # para m\'as detalles
   #- \numberwithin{equation}{section} # Para numerar ecuaciones por secciones cuando están numeradas
-  - \usepackage{amssymb}
-  - \usepackage{mathtools}
-  #- \usepackage{braket}
-  #- \usepackage[shortlabels]{enumitem}
-  - \usepackage[spanish]{babel}
-  - \decimalpoint
-  - \usepackage{graphicx}
-  - \usepackage{caption}
-  #- \renewcommand{\and}{\\}
-  #- \renewcommand{\arraystretch}{1.2}
-  - \usepackage{booktabs}
+  # - \decimalpoint
+  #- \usepackage{caption}
   - \usepackage{float}
-  - \usepackage[font=small,labelfont=bf]{caption}
-  - \usepackage{fancyhdr}
-  - \usepackage{dsfont}
+  #- \usepackage[font=small,labelfont=bf]{caption}
   # para usar kableExtra se requieren los siguientes paquetes
   # ver
   # https://haozhu233.github.io/kableExtra/awesome_table_in_pdf.pdf
@@ -46,7 +43,7 @@ header-includes:
   - \usepackage[normalem]{ulem}
   - \usepackage{makecell}
   - \usepackage{xcolor}
-  - \usepackage{subfigure} %para incluir mas de una figura en un solo espacio
+  # Definir ambientes de Teorema
   - \newtheorem{teorema}{Teorema}
   - \newtheorem{lema}[teorema]{Lema}
   - \newtheorem{corolario}[teorema]{Corolario}
@@ -58,12 +55,10 @@ header-includes:
   
 output: 
   pdf_document:
-    #toc: true
     toc_depth: 2
     number_sections: true
     df_print: kable
     highlight: tango
-    #keep_tex: true
 ---
 
 \newcommand{\cb}{\color{blue}}
@@ -98,42 +93,15 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 #install.packages("kableExtra")
 # library(library_name)
 library(knitr)
-library(kableExtra)
-#library(rgdal)
-#library(RColorBrewer)
-#library(classInt)
-library(tidyverse)
-#library(psych)
-#library(polycor)
-#library(ggcorrplot)
-#library(corrplot)
-#library(cluster)
-#library(mclust)
-library(factoextra)
-#library(dendextend)
-#library(purrr)
-#library(NbClust)
-#library(WeightedCluster)
 library(readr)
-#library(igraph)
 library(ggplot2)
-#library(nFactors)
+library(kableExtra)
+library(plyr)
+library(dplyr)
+library(tidyverse)
 library(factoextra)
-#library(MASS)
-#library(locfit)
-#library(Corbi)
-#library(lattice)
-#library(andrews)
-#library(hrbrthemes)
-#library(patchwork)
-#library(GGally)
-#library
-library("plyr")
-library("dplyr")
 # tydiverse incluye ggplot2, readr, dplyr, etc 
 ```
-
-
 
 
 <!-- AQUÍ INICIA LA PÁGINA DE TÍTULO
@@ -143,8 +111,8 @@ library("dplyr")
 
 \title{ {\sc Universidad Nacional Autónoma de México}\\
 \vspace{1cm}{\sc Centro de Ciencias Matemáticas}\\ 
-   \vspace{1.5cm} {Rldies} \\
-       \vspace{1.5cm} {Ejemplo de Rmarkdow con Latex}\\[2cm]
+   \vspace{1.5cm} {R-Ladies} \\
+       \vspace{1.5cm} {Ejemplo de Rmarkdown con Latex}\\[2cm]
        }
   
 \date{\vspace{8.5cm} Morelia\\
@@ -194,13 +162,15 @@ Si ya tienen alguna versión de Latex, no hacer nada, Si no tienen instalado Lat
 
 ## Ecuaciones
 
-En LaTeX, el texto matemático lo escribimos entre signos de pesos `$x+2$`. Por ejemplo: $f(x)=2x^2-7x+4$. Cuando usamos doble signo de pesos, el efecto que obtenemos es que el texto matemático se centra: 
+En LaTeX, el texto matemático lo escribimos entre signos de pesos `$x+2$`. Por ejemplo, si escribimos `$f(x)=2x^2-7x+4$`, el resultado que obtenemos es: $f(x)=2x^2-7x+4$. 
+
+Cuando usamos doble signo de pesos, el efecto que obtenemos es que el texto matemático se centra. Al escribir `$$g(x)=\frac{7x-2}{x+4}.$$` obtenemos: 
 $$g(x)=\frac{7x-2}{x+4}.$$
 
 
 Otros entornos que podemos usar son los siguientes.
 
-- Sistema de ecuaciones: 
+- Entorno `\begin{equation*}...\end{equation*} `: 
 
 \begin{equation*}
 \left\{
@@ -211,20 +181,20 @@ Otros entornos que podemos usar son los siguientes.
 \right.
 \end{equation*}
 
-- Matriz
+- Entorno `\begin{bmatrix} ... \end{bmatrix}`: 
 
 $$X = \begin{bmatrix}1 & 4\\
 5 & 8\\
 3 & 8
 \end{bmatrix}$$
 
-- Matriz con paréntesis
+- Entorno `\begin{pmatrix} ... \end{pmatrix}`:
 
 $$A = \begin{pmatrix}\alpha & \beta\\
 \gamma & \delta
 \end{pmatrix}$$
 
-- Determinantes.
+- Entorno `\begin{equation}...\end{equation} `:
 
 \begin{equation}\label{eq:determinante}
 \begin{vmatrix}a & b\\
@@ -232,12 +202,12 @@ c & d
 \end{vmatrix}=ad-bc.
 \end{equation}
 
-En la ecuación \ref{eq:determinante}, vemos como se calcula el determinante de una matriz de tamaño $2\times 2$.
+Para hacer referencia a una ecuación, necesitamos colocar un `\label{nombre}` junto al entorno de ecuación y para referirnos a dicha ecuación usamos `\ref{eq:determinante}`, así, podemos decir que la ecuación \ref{eq:determinante}, muestra como se calcula el determinante de una matriz de tamaño $2\times 2$.
 
 
 ## Listas
 
-Las listas también se pueden crear con los entornos de `itemize` o de `enumerate` 
+Las listas también se pueden crear con los entornos de `\begin{itemize}...\end{itemize}` o de `\begin{enumerate}...\end{enumerate}`. 
 
 \begin{enumerate}
     \item De $3a+2b-c$ restar $2a+3b-c$
@@ -267,7 +237,13 @@ Podemos tener listas y sublistas.
 
 ## Teoremas y figuras
 
-Para escribir un teorema, podemos usar el entorno `\begin{teorema} \end{teorema}`.
+En LaTeX existe los entornos de teoremas, sin embargo también podemos modificarlos usando:
+
+ - `\newtheorem{teorema}{Teorema}`
+ - `\newtheorem{lema}[teorema]{Lema}`.
+
+
+Entonces, para escribir un teorema, usamos el entorno que acabamos de definir `\begin{teorema} \end{teorema}`
 
 \begin{definicion}
 Un triángulo rectángulo es un triángulo que tiene un ángulo recto.
@@ -294,6 +270,11 @@ Calcula el cateto o hipotenusa faltante de cada uno de los triángulos rectángu
 \end{ejemplo}
 
 
+Los entornos que nos sirven para insertar figuras son:
+
+ - `\begin{figure} ... \end{figure}`
+ - `\includegraphics[]{ruta/nombre_figura}`
+ - `\subfigure[]{\includegraphics[]{ruta}}`
 
 
 
@@ -311,7 +292,7 @@ Calcula el cateto o hipotenusa faltante de cada uno de los triángulos rectángu
 \end{figure}
 
 
-## Tablas
+## Tablas en Rmarkdown
 
 En álgebra, usamos símbolos para representar cantidades, estos símbolos pueden ser números o letras. Los números los usamos para representar cantidades conocidas, mientras que las letras las usamos para representar cantidades desconocidas. Este tipo de expresiones las llamamos **términos algebraicos**. Los términos algebraicos constan de coeficientes, bases y exponentes. 
 
@@ -333,9 +314,10 @@ a)$15-2x$  |  b) $2x-15$ |  c) $2x$ | d) $15x+2$
 2) Años de Margot hace tres años.|||
 a) $3x$   | b) $3-x$    |  c) $2x-1$     |   d) $x-3$
 
-\pagebreak
 
-Más formas de hacer tablas.
+## Tablas en LaTeX.
+
+Una tabla en LaTeX se puede escribir usando el entorno `\begin{tabular}{cantidad de columnas o tamaño}.... \end{tabular}`.
 
 \begin{tabular}{|p{6cm}|p{6cm}|}
 \hline
@@ -374,7 +356,6 @@ $\left\{
 \end{tabular}
 
 
-\pagebreak
 
 # Código en R
 
@@ -434,7 +415,7 @@ calcGDP <- function(dat, year=NULL, country=NULL) {
 }
 ```
 
-Vamos a usar la función con los parámetros `year=2007` y `country="Australia"`.
+Vamos a usar la función con los parámetros `year=2007` y `country=Australia`.
 
 ```{r tabla_sin_formato, echo = FALSE}
 calcGDP(gapminder, year=2007, country="Australia")
@@ -471,7 +452,7 @@ kable(head(gapminder[,1:3],10), booktabs=T, caption="Primeras 15 filas de la bas
                 latex_options = c("hold_position", "striped"))
 ```
 
-Vamos a usar de nuevo nuestra función `calGDP` con los parámetros `year=2007`, `country="Australia` y lo vamos a asignar a la variable `australia_2007`.
+Vamos a usar de nuevo nuestra función `calGDP` con los parámetros `year=2007`, `country=Australia` y lo vamos a asignar a la variable `australia_2007`.
 
 ```{r tabla_con_formato, echo = FALSE}
 australia_2007 <-calcGDP(gapminder, year=2007, country="Australia")
@@ -498,19 +479,15 @@ kbl(gapminder[1:70,], longtable = TRUE, booktabs = TRUE, align = "c",
 \pagebreak
 
 ```{r tab_gapminder_2, collapse=TRUE, echo=FALSE}
-gapminder1 <- gapminder[1:30,]
-gapminder2 <- gapminder[40:70,]
-
-kbl(gapminder1, longtable = TRUE, booktabs = TRUE, align = "c",
-    caption = "Tabla dividida y con diseño horizontal de página") %>%
+kbl(calcGDP(gapminder[1:30,]), booktabs = TRUE, align = "c",
+    caption = "Tabla dividida y con diseño horizontal de página[note]") %>%
   kable_styling(position = "center",
                 latex_options = c("repeat_header", "hold_position"),
                 font_size = 10) %>%
-  landscape()
-kbl(gapminder2, longtable = TRUE, booktabs = TRUE, align = "c") %>%
-  kable_styling(position = "center",
-                latex_options = c("repeat_header", "hold_position"),
-                font_size = 10) %>%
+  add_header_above(c(" ", "Grupo 1[note]"=4, "Grupo 2[note]"= 2))%>%
+  add_footnote(c("Primeras 30 filas",
+                 "Grupo 1 contiene año, población, continente y esperanza de vida",
+                 "Grupo 2 contiene el GDP per capita y la media"))%>%
   landscape()
 
 ```
@@ -617,7 +594,18 @@ Yihui Xie,
 
 \bibitem{swt}
 \emph{R for Reproducible Scientific Analysis},
-Software Carpentry, \url{https://swcarpentry.github.io/r-novice-gapminder/}
+Software Carpentry, \url{https://swcarpentry.github.io/r-novice-gapminder/}.
+
+
+\bibitem{latex}
+Pakin, Scott, 
+\emph{The Comprehensive LaTeX Symbol List},
+\url{http://tug.ctan.org/info/symbols/comprehensive/symbols-a4.pdf}.
+
+\bibitem{Zhu}
+Zhu, Hao,
+\emph{Create Awesome LaTeX Table with knitr::kable and KableExtra},
+\url{https://haozhu233.github.io/kableExtra/awesome_table_in_pdf.pdf}
 
 \end{thebibliography}
 
