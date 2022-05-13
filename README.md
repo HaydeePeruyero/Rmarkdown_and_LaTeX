@@ -1,4 +1,4 @@
-# Rladies
+# R-Ladies
 
 Ejemplo básico de Rmarkdown con Latex
 
@@ -28,9 +28,5 @@ ___
 
 [bookdown: Authoring Books and Technical Documents with R Markdown](https://bookdown.org/yihui/bookdown/)
 
-___
 
-## **Autor**
-
- * **Haydeé Peruyero** - [@HaydeePeruyero](https://github.com/HaydeePeruyero)
 
