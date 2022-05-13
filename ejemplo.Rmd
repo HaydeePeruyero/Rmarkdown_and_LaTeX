@@ -1,0 +1,624 @@
+---
+# Preámbulo con paquetes y definiciones básicas
+# Se incluyen los comandos mínimos de LaTeX
+#title: Rldies
+author:
+ - Nombres Apellidos (email_1@gmail.com)
+ - Nombres Apellidos (email_2@gmail.com)
+header-includes:
+  - \usepackage{array}
+  - \usepackage{booktabs}
+  - \usepackage{amsmath}
+  - \allowdisplaybreaks #% para permitir rompimiento de ecuaciones en p\'aginas distintas
+    # ver http://tex.stackexchange.com/questions/51682/is-it-possible-to-pagebreak-aligned-equations
+    # para m\'as detalles
+  #- \numberwithin{equation}{section} # Para numerar ecuaciones por secciones cuando están numeradas
+  - \usepackage{amssymb}
+  - \usepackage{mathtools}
+  #- \usepackage{braket}
+  #- \usepackage[shortlabels]{enumitem}
+  - \usepackage[spanish]{babel}
+  - \decimalpoint
+  - \usepackage{graphicx}
+  - \usepackage{caption}
+  #- \renewcommand{\and}{\\}
+  #- \renewcommand{\arraystretch}{1.2}
+  - \usepackage{booktabs}
+  - \usepackage{float}
+  - \usepackage[font=small,labelfont=bf]{caption}
+  - \usepackage{fancyhdr}
+  - \usepackage{dsfont}
+  # para usar kableExtra se requieren los siguientes paquetes
+  # ver
+  # https://haozhu233.github.io/kableExtra/awesome_table_in_pdf.pdf
+  # para más detalles
+  - \usepackage{booktabs}
+  - \usepackage{longtable}
+  - \usepackage{array}
+  - \usepackage{multirow}
+  - \usepackage{wrapfig}
+  - \usepackage{float}
+  - \usepackage{colortbl}
+  - \usepackage{pdflscape}
+  - \usepackage{tabu}
+  - \usepackage{threeparttable}
+  - \usepackage{threeparttablex}
+  - \usepackage[normalem]{ulem}
+  - \usepackage{makecell}
+  - \usepackage{xcolor}
+  - \usepackage{subfigure} %para incluir mas de una figura en un solo espacio
+  - \newtheorem{teorema}{Teorema}
+  - \newtheorem{lema}[teorema]{Lema}
+  - \newtheorem{corolario}[teorema]{Corolario}
+  - \newtheorem{proposicion}[teorema]{Proposici\'on}
+  - \newtheorem{conjetura}[teorema]{Conjetura}
+  - \newtheorem{definicion}{Definici\'on}
+  - \newtheorem{ejemplo}[teorema]{Ejemplo}
+  - \newtheorem{nota}{Nota}
+  
+output: 
+  pdf_document:
+    #toc: true
+    toc_depth: 2
+    number_sections: true
+    df_print: kable
+    highlight: tango
+    #keep_tex: true
+---
+
+\newcommand{\cb}{\color{blue}}
+\newcommand{\cg}{\color{green}}
+\newcommand{\cvi}{\color{violet}}
+
+
+<!-- El siguiente código sirve para poner el logo del encabezado. -->
+\pagestyle{fancy}
+\fancyhf{}
+
+\rhead{\begin{picture}(0,0) 
+\put(-40,-40) %mover de posición la imagen
+{\includegraphics[width=15mm]
+{images/ccm-2}} 
+\end{picture}}
+
+\renewcommand{\headrulewidth}{0pt}
+\rfoot[\thepage]{\vspace{-0.5cm} \thepage}
+
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+```
+
+```{r include = FALSE, echo = FALSE}
+##  LIBRERÍAS
+# Aquí vamos a incluir las librerías que necesitemos
+# En donde se pongan pedazos de código, únicamente se comentará
+# Es BUENA PRÁCTICA poner las librerías al principio, por ello las ponemos aquí
+# Primero deben asegurarse de tener instalados todos los paquetes
+#install.packages("kableExtra")
+# library(library_name)
+library(knitr)
+library(kableExtra)
+#library(rgdal)
+#library(RColorBrewer)
+#library(classInt)
+library(tidyverse)
+#library(psych)
+#library(polycor)
+#library(ggcorrplot)
+#library(corrplot)
+#library(cluster)
+#library(mclust)
+library(factoextra)
+#library(dendextend)
+#library(purrr)
+#library(NbClust)
+#library(WeightedCluster)
+library(readr)
+#library(igraph)
+library(ggplot2)
+#library(nFactors)
+library(factoextra)
+#library(MASS)
+#library(locfit)
+#library(Corbi)
+#library(lattice)
+#library(andrews)
+#library(hrbrthemes)
+#library(patchwork)
+#library(GGally)
+#library
+library("plyr")
+library("dplyr")
+# tydiverse incluye ggplot2, readr, dplyr, etc 
+```
+
+
+
+
+<!-- AQUÍ INICIA LA PÁGINA DE TÍTULO
+  Indicaciones:
+          El nombre de los autores aparece al principio
+-->
+
+\title{ {\sc Universidad Nacional Autónoma de México}\\
+\vspace{1cm}{\sc Centro de Ciencias Matemáticas}\\ 
+   \vspace{1.5cm} {Rldies} \\
+       \vspace{1.5cm} {Ejemplo de Rmarkdow con Latex}\\[2cm]
+       }
+  
+\date{\vspace{8.5cm} Morelia\\
+      \vspace{1cm} 14 de mayo de 2022}
+
+ \maketitle
+ 
+
+\thispagestyle{fancy}
+\newpage
+
+<!-- FIN DE LA PÁGINA DE  TÍTULO-->
+
+<!-- INICIO ÍNDICE -->
+
+\tableofcontents
+\newpage
+<!-- FIN INDICE -->
+
+
+
+<!-- INICIO DOCUMENTO -->
+
+
+# Introducción
+
+Primero debemos instalar: Rmarkdown
+
+```{r }
+# Install from CRAN
+#install.packages('rmarkdown')
+```
+
+
+Si ya tienen alguna versión de Latex, no hacer nada, Si no tienen instalado Latex, entonces instalar alguna distribución MiKTeX, MacTeX, and TeX Live o TinyTex
+
+
+```{r}
+#install.packages('tinytex')
+#tinytex::install_tinytex()
+# to uninstall TinyTeX, run
+# tinytex::uninstall_tinytex()
+```
+
+
+# Sintaxis de LaTeX
+
+## Ecuaciones
+
+En LaTeX, el texto matemático lo escribimos entre signos de pesos `$x+2$`. Por ejemplo: $f(x)=2x^2-7x+4$. Cuando usamos doble signo de pesos, el efecto que obtenemos es que el texto matemático se centra: 
+$$g(x)=\frac{7x-2}{x+4}.$$
+
+
+Otros entornos que podemos usar son los siguientes.
+
+- Sistema de ecuaciones: 
+
+\begin{equation*}
+\left\{
+\begin{array}{r c l c l}
+  8x & - & y & = & 29 \\
+  2x & + & y & = & 11 \\
+\end{array}
+\right.
+\end{equation*}
+
+- Matriz
+
+$$X = \begin{bmatrix}1 & 4\\
+5 & 8\\
+3 & 8
+\end{bmatrix}$$
+
+- Matriz con paréntesis
+
+$$A = \begin{pmatrix}\alpha & \beta\\
+\gamma & \delta
+\end{pmatrix}$$
+
+- Determinantes.
+
+\begin{equation}\label{eq:determinante}
+\begin{vmatrix}a & b\\
+c & d
+\end{vmatrix}=ad-bc.
+\end{equation}
+
+En la ecuación \ref{eq:determinante}, vemos como se calcula el determinante de una matriz de tamaño $2\times 2$.
+
+
+## Listas
+
+Las listas también se pueden crear con los entornos de `itemize` o de `enumerate` 
+
+\begin{enumerate}
+    \item De $3a+2b-c$ restar $2a+3b-c$
+    \item De $3x-7y+4z$ restar $9z-7y+3x$
+    \item De $x^2-5xy+8xz$ restar $8zx-5xy-9x^2$
+\end{enumerate}
+
+Podemos tener listas y sublistas.
+
+\begin{itemize}
+    \item Se hacen 3 lanzamientos con una moneda. Calcula las siguientes probabilidades.
+    \begin{enumerate}
+        \item P(Salir tres caras)
+        \item P(Salir dos caras)
+        \item P(Salir al menos una cara)
+    \end{enumerate}
+
+\item Se tiran dos dados. Calcular las probabilidades de los siguientes eventos.
+    \begin{enumerate}
+        \item A = El número mayor es 1.\\[1cm]
+        \item B = El número mayor es 2.\\[1cm]
+        \item C = El número mayor es 3.\\[1cm]
+    \end{enumerate}
+\end{itemize}
+
+
+
+## Teoremas y figuras
+
+Para escribir un teorema, podemos usar el entorno `\begin{teorema} \end{teorema}`.
+
+\begin{definicion}
+Un triángulo rectángulo es un triángulo que tiene un ángulo recto.
+\end{definicion}
+
+
+\begin{teorema}[Teorema de Pitágoras]
+En un triángulo rectángulo, la suma de los cuadrados de los catetos es igual al cuadrado de la hipotenusa:
+$$a^2=b^2+c^2.$$
+\begin{center}
+\includegraphics[width=50mm]{images/TeoPit.png}
+\end{center}
+\end{teorema}
+
+\begin{ejemplo}
+Calcula el cateto o hipotenusa faltante de cada uno de los triángulos rectángulos de la Figura \ref{ej1}.
+\begin{figure}
+\centering
+\includegraphics[width=100mm]{images/trig1.png}
+\caption{Triángulo rectángulos}
+\label{ej1}
+\end{figure}
+
+\end{ejemplo}
+
+
+
+
+
+\begin{figure}[h]
+\centering
+\subfigure[Subfigura uno]{
+        \includegraphics[width=4.5cm,height=4.5cm]{images/ej6.png}}
+   \hspace{.3cm}
+   \subfigure[Subfigura dos]{
+        \includegraphics[width=4.5cm,height=4.5cm]{images/ej7.png}}
+   \hspace{.3cm}
+ \subfigure[Subfigura tres]{
+         \includegraphics[width=4.5cm,height=4.5cm]{images/ej8.png}}
+\caption{Varias figuras en un solo entorno\label{fig:varias_figuras}}
+\end{figure}
+
+
+## Tablas
+
+En álgebra, usamos símbolos para representar cantidades, estos símbolos pueden ser números o letras. Los números los usamos para representar cantidades conocidas, mientras que las letras las usamos para representar cantidades desconocidas. Este tipo de expresiones las llamamos **términos algebraicos**. Los términos algebraicos constan de coeficientes, bases y exponentes. 
+
+
+|  Término 	| Coeficiente(s)   	|  Base(s) 	| Exponente(s)  	|   	
+|:---:	|:---:	|:---:	|:---:	|
+| $5x^3$  	| $5$   	| $x$  	| $3$  	|
+| $8m^2n^3$  	|  $8$ 	| $m,n$  	| $2,3$  	|
+| $-\frac{2}{7}(x+y)^3$  	| $-\frac{2}{7}$  	|  $(x+y)$ 	|  $3$ 	|
+|$p$          |   $1$ |     $p$  |   $1$ |
+
+
+Ejemplo de opción múltiple:
+
+I. Selecciona la respuesta correcta en cada caso.|||
+:-----:|:-----:|:-----:|:-----:
+1) El doble de un número menos $15$| | | 
+a)$15-2x$  |  b) $2x-15$ |  c) $2x$ | d) $15x+2$  
+2) Años de Margot hace tres años.|||
+a) $3x$   | b) $3-x$    |  c) $2x-1$     |   d) $x-3$
+
+\pagebreak
+
+Más formas de hacer tablas.
+
+\begin{tabular}{|p{6cm}|p{6cm}|}
+\hline
+1. Suma y Resta &  2. Suma y Resta \\
+ $\left\{
+\begin{array}{r c l c l}
+  8x & - & y & = & 29 \\
+  2x & + & y & = & 11 \\
+\end{array}
+\right.$
+&  $\left\{
+\begin{array}{r c l c l}
+  8x & - & 3y & = & 5 \\
+  5x & - & 2y & = & 4 \\
+\end{array}
+\right.$ \\
+     & \\
+     & \\
+\hline
+ 3. Igualación   & 4. Igualación\\
+$\left\{
+\begin{array}{r c l c l}
+  2x & + & 9y & = & 39 \\
+  5x & - & y & = & -20 \\
+\end{array}
+\right.$ & $\left\{
+\begin{array}{r c l c l}
+  2x & + & y & = & -2 \\
+  6x & - & 5y & = & 18 \\
+\end{array}
+\right.$ \\
+     & \\
+     & \\
+\hline
+
+\end{tabular}
+
+
+\pagebreak
+
+# Código en R
+
+Existen dos tipos de R código en Rmarkdown, código en línea y chunks. La sintaxis para escribir código R en línea es 
+`` ` r R_CODE ` ``. Por ejemplo, supongamos que queremos calcular la suma de $1+1$, entonces escribimos `r 1+1`.
+
+
+Para los chunks, veamos lo siguiente. 
+
+Leemos la base de datos y la asignamos a la variable `gapminder`. Vamos a agregar un nombre a nuestro chunk y los atributos `message=FALSE, warning=FALSE` para que no se despiegle los mensajes de error o los warning si es que existen en nuestro pdf.
+
+```{r base_datos, message=FALSE, warning=FALSE}
+gapminder <- read.csv("bd/gapminder_data.csv", stringsAsFactors = TRUE)
+```
+
+Vamos a realizar un gráfico de dispersión para darnos una idea de como están los datos en nuestra base de datos `gapminder`, las variables que usaremos serán `gdpPercap` y `lifeExp`.  
+
+```{r primera_grafica, echo=FALSE, fig.cap="Primera gráfica", out.width = '70%', fig.pos = 'H', fig.align = "center"}
+ggplot(data = gapminder, mapping = aes(x = gdpPercap, y = lifeExp)) +
+  geom_point()
+```
+
+Atributos del chunk:
+
+ - `fig.cap`: nos sirve para darle un título a nuestro gráfico. Para hacer referencia a dicho gráfico más adelante, se usa la sintaxis `\ref{fig:nombre}`.
+ 
+ - `fig.width`, `fig.height`: nos indica el tamaño real de la figura.
+ 
+ - `out.width`: nos indica el tamaño del output de la figura.
+ 
+ - `fig.align`: nos indica que la posición de la figura.
+
+Para mostrar dos plots juntos, usamos `fig.show='hold'`.
+
+```{r dos_plots, echo=FALSE, fig.cap="Dos plots", fig.show='hold', out.width = '40%', fig.align = "center"}
+ggplot(data = gapminder, mapping = aes(x = gdpPercap, y = lifeExp)) +
+  geom_point()
+ggplot(data=gapminder, aes(x=year, y=lifeExp, color=continent))+
+  geom_line()
+```
+
+
+En los chunks, podemos modificar su queremos que aparesca el código de R o no cambiando la opción de `include=TRUE` o `include=FALSE`.
+
+```{r funcion_calcGDP, include=TRUE}
+calcGDP <- function(dat, year=NULL, country=NULL) {
+  if(!is.null(year)) {
+    dat <- dat[dat$year %in% year, ]
+  }
+  if (!is.null(country)) {
+    dat <- dat[dat$country %in% country,]
+  }
+  gdp <- dat$pop * dat$gdpPercap
+  
+  new <- cbind(dat, gdp=gdp)
+  return(new)
+}
+```
+
+Vamos a usar la función con los parámetros `year=2007` y `country="Australia"`.
+
+```{r tabla_sin_formato, echo = FALSE}
+calcGDP(gapminder, year=2007, country="Australia")
+```
+
+
+Tambien podemos definir ciertas variables en los chunks y después mandarlas a llamar dentro del texto.
+
+Vamos a calcular la media de la columna `dgp` de `Africa`, la vamos a asignar a una variable para después poderla llamar en cualquier parte del texto.  
+
+```{r media1, include=FALSE}
+withGDP <- calcGDP(gapminder)
+media_Africa_gdp <- mean(withGDP[withGDP$continent == "Africa", "gdp"])
+```
+
+La media es `r media_Africa_gdp`.
+
+## Formato a tablas
+
+Para dar un formato más amigable a las tablas, usamos el paquete `kable`.
+
+```{r primera_tabla, echo = FALSE}
+kable(head(gapminder[,],15), booktabs=T, caption="Primeras 15 filas de la base de datos ``gapminder`")%>%
+  kable_styling(position = "center",
+                latex_options = c("hold_position", "striped"))
+```
+
+Vamos a cambiar el nombre de las columnas usando la opción `col.names`.
+
+```{r segunda_tabla, echo = FALSE}
+kable(head(gapminder[,1:3],10), booktabs=T, caption="Primeras 15 filas de la base de datos ``gapminder`",
+      col.names=c("Ciudad", "Año", "Población"))%>%
+  kable_styling(position = "center",
+                latex_options = c("hold_position", "striped"))
+```
+
+Vamos a usar de nuevo nuestra función `calGDP` con los parámetros `year=2007`, `country="Australia` y lo vamos a asignar a la variable `australia_2007`.
+
+```{r tabla_con_formato, echo = FALSE}
+australia_2007 <-calcGDP(gapminder, year=2007, country="Australia")
+
+kable(australia_2007, booktabs = T, caption = "Primera tabla con formato") %>%
+  kable_styling(position = "center",
+                latex_options = c("hold_position", "striped"))
+```
+
+\pagebreak
+
+### Dividir la tabla 
+
+Supongamos que tenemos una tabla muy grande, para permitir partirla amigablemente en varias páginas, usamos el paquete `longatable` y colocamos el argumento `longtable=TRUE` dentro de las opciones de `kable`.
+
+```{r tab_gapminder_1, collapse=TRUE, echo=FALSE}
+kbl(gapminder[1:70,], longtable = TRUE, booktabs = TRUE, align = "c",
+    caption = "Tabla dividida") %>%
+  kable_styling(position = "center",
+                latex_options = c("repeat_header", "hold_position"),
+                font_size = 10)
+```
+
+\pagebreak
+
+```{r tab_gapminder_2, collapse=TRUE, echo=FALSE}
+gapminder1 <- gapminder[1:30,]
+gapminder2 <- gapminder[40:70,]
+
+kbl(gapminder1, longtable = TRUE, booktabs = TRUE, align = "c",
+    caption = "Tabla dividida y con diseño horizontal de página") %>%
+  kable_styling(position = "center",
+                latex_options = c("repeat_header", "hold_position"),
+                font_size = 10) %>%
+  landscape()
+kbl(gapminder2, longtable = TRUE, booktabs = TRUE, align = "c") %>%
+  kable_styling(position = "center",
+                latex_options = c("repeat_header", "hold_position"),
+                font_size = 10) %>%
+  landscape()
+
+```
+
+\newpage
+
+# Ejercicios
+
+Vamos a usar los ejercicios de la lección 12 de [R for Reproducible Scientific Analysis](https://swcarpentry.github.io/r-novice-gapminder/) para darle formato a las tablas y a los gráficos. 
+
+**Ejercicio 1:**: Calcular la media de gdp por continente y darle formato a tabla usando `kable`, añadir nombres de las columnas
+
+```{r media_GDP, echo=FALSE, include=FALSE}
+media_por_continente <- ddply(
+ .data = calcGDP(gapminder),
+ .variables = "continent",
+ .fun = function(x) mean(x$gdp)
+)
+
+kable(media_por_continente, booktabs = T, caption = "Media de `gdp` por continente", 
+      col.names = c("Continente", "Media de GDP")) %>%
+  kable_styling(position = "center",
+                latex_options = c("hold_position", "striped"),
+                font_size = 14)
+
+```
+
+
+
+
+**Ejercicio 2:** Calcular la media de `gdp` agrupando por año y continente. Darle formato a la tabla.
+
+```{r media_gdp_C_A, echo=FALSE, include=FALSE}
+ejercicio2 <- ddply(
+ .data = calcGDP(gapminder),
+ .variables = c("continent", "year"),
+ .fun = function(x) mean(x$gdp)
+)
+
+kable(ejercicio2, longtable= TRUE, booktabs = T, caption = "Media de `gdp` por continente y año", 
+      col.names = c("Continente", "Año", "Media de GDP")) %>%
+  kable_styling(position = "center",
+                latex_options = c("hold_position", "striped"),
+                font_size = 10)
+
+```
+
+
+**Ejercicio 3:** Calcular la media de `gdp` por continente y año usando `daply`. Dar formato a la tabla.
+```{r ejercicio_3, echo=FALSE, include=FALSE}
+ejercicio3 <- daply(
+ .data = calcGDP(gapminder),
+ .variables = c("continent", "year"),
+ .fun = function(x) mean(x$gdp)
+)
+
+ej3_1 <- ejercicio3[,1:6]
+ej3_2 <- ejercicio3[,7:12]
+
+kable(ej3_1, booktabs=T, caption="Ejercicio 3")%>%
+  kable_styling(position = "center",
+                latex_options = c("repeat_header", "hold_position"),
+                font_size = 8)
+kable(ej3_2, booktabs=T)%>%
+  kable_styling(position = "center",
+                latex_options = c("repeat_header", "hold_position"),
+                font_size = 8)
+```
+
+**Ejercicio 4:** Calcular la media de la variable `lifeExp` agrupando por continente y año. Calcular la media por continente del año `2007`. Darle formato a la tabla, seleccionando solo las columnas `continent` y `V1`.
+
+```{r challenge_3, include=FALSE}
+solution <- ddply(
+  .data = gapminder,
+  .variables = c("continent", "year"),
+  .fun = function(x) mean(x$lifeExp)
+)
+solution_2007 <- solution[solution$year == 2007, ]
+```
+
+```{r media_lifeExp_formato, echo=FALSE, include=FALSE}
+base_2 <- select(solution_2007, continent, V1)
+kable(base_2, booktabs = T, caption = "Media de `lifeExp` por continente del año 2007",
+      col.names = c("Continente", "Media lifeExp")) %>%
+  kable_styling(position = "center",
+                latex_options = c("hold_position", "striped"),
+                font_size = 14)
+```
+
+
+
+
+
+<!-- FIN DEL DOCUMENTO -->
+
+---
+
+ <!-- REFERENCIAS -->
+  \addcontentsline{toc}{section}{Referencias}
+\begin{thebibliography}{99}
+\bibitem{Xie} 
+Yihui Xie,
+\emph{bookdown: Authoring Books and Technical Documents with R Markdown}, CRC Press, \url{https://bookdown.org/yihui/bookdown/}.
+
+\bibitem{swt}
+\emph{R for Reproducible Scientific Analysis},
+Software Carpentry, \url{https://swcarpentry.github.io/r-novice-gapminder/}
+
+\end{thebibliography}
+
+
