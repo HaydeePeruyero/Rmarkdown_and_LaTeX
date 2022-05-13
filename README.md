@@ -6,13 +6,12 @@ ___
 
 # Requisitos
 
-* Instalar Rmarkdown
+* Instalar Rmarkdown:
+
 `install.packages('rmarkdown')`
 
-* Instalar LaTeX
-
-Si ya tienen alguna versión de Latex, no hacer nada, Si no tienen instalado Latex, entonces instalar alguna
-distribución MiKTeX, MacTeX, and TeX Live o TinyTex.
+* Instalar LaTeX: Si ya tienen alguna versión de Latex, no hacer nada, Si no tienen instalado Latex, entonces instalar alguna
+distribución MiKTeX, MacTeX, and TeX Live o TinyTex:
 
 `install.packages('tinytex')`
 
