@@ -1,4 +1,4 @@
-# Rladies
+# R-Ladies
 
 Ejemplo básico de Rmarkdown con Latex
 
